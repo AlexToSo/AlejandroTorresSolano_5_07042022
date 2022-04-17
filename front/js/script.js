@@ -1,26 +1,3 @@
-class Article{
-    constructor(jsonArticle){
-        this.altTxt = jsonArticle.altTxt;
-        this.colors = jsonArticle.colors;
-        this.description = jsonArticle.description;
-        this.imageUrl = jsonArticle.imageUrl;
-        this.name = jsonArticle.name;
-        this.price = jsonArticle.price;
-        this.id = jsonArticle._id;
-    }
-}
-
-const retrieveProductsList = () =>
-    fetch("http://localhost:3000/api/products")
-        .then(function (data) {
-            if (data.ok) {
-                return data.json();
-            }
-        })
-        .catch(function (err) {
-            console.log("Erreur " + err);
-        });
-
 const createIndex = (itemsArray) => {
     const itemsSection = document.getElementById('items');
 
@@ -34,8 +11,8 @@ const createIndex = (itemsArray) => {
 
         itemLink.setAttribute('href', `product.html?id=${article.id}`)
 
-        itemImage.setAttribute('src',article.imageUrl)
-        itemImage.setAttribute('alt',article.altTxt)
+        itemImage.setAttribute('src', article.imageUrl)
+        itemImage.setAttribute('alt', article.altTxt)
 
         itemTitle.classList.add('productName')
         itemTitle.innerText = article.name
@@ -54,7 +31,7 @@ const createIndex = (itemsArray) => {
 }
 
 const main = async () => {
-    const productsList = await retrieveProductsList();
+    const productsList = await retrieveProducts("");
     createIndex(productsList);
 }
 
