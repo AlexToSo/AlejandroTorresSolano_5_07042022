@@ -10,21 +10,65 @@ const createProduct = (item) => {
     itemDescription.innerText = item.description
 
     document.querySelector('.item__img').appendChild(itemImage)
-    
+
     for (color of item.colors) {
         const itemColorOption = document.createElement('option')
-        itemColorOption.setAttribute('value',color)
+        itemColorOption.setAttribute('value', color)
         itemColorOption.innerText = color
         document.getElementById('colors').appendChild(itemColorOption)
     }
 }
 
+const addToCart = (articleId, articleNumber, articleColor) => {
+    let cartList = getCart();
+    let articleToAdd = new Cart(articleId, articleNumber, articleColor);
+
+    let alreadyInCart = false;
+
+    for (let i in cartList) {
+        if ((cartList[i].id == articleToAdd.id) && (cartList[i].color == articleToAdd.color)) {
+            cartList[i].quantity += articleToAdd.quantity;
+            alreadyInCart = true;
+            break
+        }
+    }
+
+    if (!alreadyInCart) {
+        cartList.push(articleToAdd);
+    }
+    saveCart(cartList);
+}
+
+const getCart = () => {
+    let cartList = localStorage.getItem('cartList');
+    if (cartList == null) {
+        return [];
+    }
+    else {
+        return JSON.parse(cartList);
+    }
+}
+
+const saveCart = (cartList) => {
+    localStorage.setItem('cartList', JSON.stringify(cartList));
+}
+
 const main = async () => {
     var url = new URL(window.location.href);
-    const id = url.searchParams.get("id");
+    const articleId = url.searchParams.get('id');
 
-    const product = await retrieveProducts(id);
+    const product = await retrieveProducts(articleId);
     createProduct(product);
+
+    document.getElementById('addToCart').addEventListener('click', function () {
+        let articleNumber = parseFloat(document.getElementById('quantity').value);
+        let articleColor = document.getElementById('colors').value;
+
+        if ((articleNumber > 0) && (articleColor != '')) {
+            addToCart(articleId, articleNumber, articleColor);
+        }
+
+    });
 }
 
 main()

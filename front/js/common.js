@@ -1,5 +1,5 @@
-class Article{
-    constructor(jsonArticle){
+class Article {
+    constructor(jsonArticle) {
         this.altTxt = jsonArticle.altTxt;
         this.colors = jsonArticle.colors;
         this.description = jsonArticle.description;
@@ -10,9 +10,17 @@ class Article{
     }
 }
 
-const retrieveProducts = async (id) => {
+class Cart {
+    constructor(id, quantity, color) {
+        this.id = id;
+        this.quantity = quantity;
+        this.color = color;
+    }
+}
+
+const retrieveProducts = async (articleId) => {
     try {
-        let data = await fetch(`http://localhost:3000/api/products/${id}`)
+        let data = await fetch(`http://localhost:3000/api/products/${articleId}`)
         if (data.ok) {
             return data.json()
         }
