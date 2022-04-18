@@ -29,3 +29,13 @@ const retrieveProducts = async (articleId) => {
         console.log("Erreur " + err)
     }
 }
+
+const getCart = () => {
+    let cartList = localStorage.getItem('cartList');
+    if (cartList == null) {
+        return [];
+    }
+    else {
+        return JSON.parse(cartList);
+    }
+}

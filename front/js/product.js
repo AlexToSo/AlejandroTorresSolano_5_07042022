@@ -39,16 +39,6 @@ const addToCart = (articleId, articleNumber, articleColor) => {
     saveCart(cartList);
 }
 
-const getCart = () => {
-    let cartList = localStorage.getItem('cartList');
-    if (cartList == null) {
-        return [];
-    }
-    else {
-        return JSON.parse(cartList);
-    }
-}
-
 const saveCart = (cartList) => {
     localStorage.setItem('cartList', JSON.stringify(cartList));
 }
