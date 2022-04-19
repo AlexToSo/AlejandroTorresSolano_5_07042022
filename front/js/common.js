@@ -39,3 +39,7 @@ const getCart = () => {
         return JSON.parse(cartList);
     }
 }
+
+const saveCart = (cartList) => {
+    localStorage.setItem('cartList', JSON.stringify(cartList));
+}

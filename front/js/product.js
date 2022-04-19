@@ -39,9 +39,7 @@ const addToCart = (articleId, articleNumber, articleColor) => {
     saveCart(cartList);
 }
 
-const saveCart = (cartList) => {
-    localStorage.setItem('cartList', JSON.stringify(cartList));
-}
+
 
 const main = async () => {
     var url = new URL(window.location.href);

@@ -1,4 +1,5 @@
 const createCart = async () => {
+
     let cartList = getCart();
 
     let articlesNumber = 0
@@ -11,8 +12,8 @@ const createCart = async () => {
 
         const cartArticle = document.createElement('article')
         cartArticle.classList.add('cart__item')
-        cartArticle.setAttribute('data-id', cartProduct.id)
-        cartArticle.setAttribute('data-color', cartProduct.color)
+        cartArticle.dataset.id = cartProduct.id
+        cartArticle.dataset.color = cartProduct.color
 
         const cartDivImage = document.createElement('div')
         cartDivImage.classList.add('cart__item__img')
@@ -34,7 +35,7 @@ const createCart = async () => {
         cartProductColor.innerText = cartProduct.color
 
         const cartProductPrice = document.createElement('p')
-        cartProductPrice.innerText = (product.price * cartProduct.quantity).toFixed(2)  + ' €'
+        cartProductPrice.innerText = (product.price * cartProduct.quantity).toFixed(2) + ' €'
 
         const cartDivSettings = document.createElement('div')
         cartDivSettings.classList.add('cart__item__content__settings')
@@ -52,6 +53,9 @@ const createCart = async () => {
         cartInputSettingsQuantity.setAttribute('min', '1')
         cartInputSettingsQuantity.setAttribute('max', '100')
         cartInputSettingsQuantity.setAttribute('value', cartProduct.quantity)
+        cartInputSettingsQuantity.addEventListener('change', function (event) {
+            modifyCart(this.closest('article').dataset.id, parseFloat(event.target.value), this.closest('article').dataset.color)
+        });
 
         cartDivSettingsQuantity.appendChild(cartPSettingsQuantity)
         cartDivSettingsQuantity.appendChild(cartInputSettingsQuantity)
@@ -62,6 +66,9 @@ const createCart = async () => {
         const cartDeleteItem = document.createElement('p')
         cartDeleteItem.classList.add('deleteItem')
         cartDeleteItem.innerText = 'Supprimer'
+        cartDeleteItem.addEventListener('click', function () {
+            modifyCart(this.closest('article').dataset.id, 0, this.closest('article').dataset.color)
+        })
 
 
         cartDivImage.appendChild(cartImage)
@@ -95,8 +102,45 @@ const createCart = async () => {
 
 }
 
+const modifyCart = (articleId, articleNumber, articleColor) => {
+    let cartList = getCart()
+
+    for (let i in cartList) {
+        if ((cartList[i].id == articleId) && (cartList[i].color == articleColor)) {
+            if (articleNumber > 0) {
+                cartList[i].quantity = articleNumber;
+                break
+            }
+            else {
+                cartList.splice(i, 1)
+                console.log(cartList)
+            }
+        }
+    }
+
+    saveCart(cartList)
+    window.location.reload()
+}
+
 const main = async () => {
-    createCart();
+
+    await createCart();
+
+    // for (let i in cartList) {
+    //     quantityInputs[i].addEventListener('change', function (e) {
+    //         console.log('salut');
+    //         // let articleNumber = parseFloat(document.getElementById('quantity').value)
+    //         // let articleColor = document.getElementById('colors').value
+
+    //         // if (articleNumber > 0) {
+    //         //     modifyCart(articleId, articleNumber, articleColor)
+    //         // }
+
+    //     });
+    // }
+
+
+
 }
 
 main()
