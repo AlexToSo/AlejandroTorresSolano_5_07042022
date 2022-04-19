@@ -1,3 +1,13 @@
+class Contact {
+    constructor(firstName, lastName, address, city, email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.email = email;
+    }
+}
+
 const createCart = async () => {
 
     let cartList = getCart();
@@ -6,6 +16,10 @@ const createCart = async () => {
     let articlesPrice = 0
 
     const cartSection = document.getElementById('cart__items')
+
+    while (cartSection.hasChildNodes()) {
+        cartSection.removeChild(cartSection.firstChild)
+    }
 
     for (let cartProduct of cartList) {
         const product = await retrieveProducts(cartProduct.id);
@@ -102,7 +116,7 @@ const createCart = async () => {
 
 }
 
-const modifyCart = (articleId, articleNumber, articleColor) => {
+const modifyCart = async (articleId, articleNumber, articleColor) => {
     let cartList = getCart()
 
     for (let i in cartList) {
@@ -119,12 +133,91 @@ const modifyCart = (articleId, articleNumber, articleColor) => {
     }
 
     saveCart(cartList)
-    window.location.reload()
+    // window.location.reload()
+    await createCart()
+}
+
+const submitForm = () => {
+    let firstNameOk, lastNameOk, addressOk, cityOk, emailOk = false
+    const firstNameInput = document.getElementById('firstName')
+    const lastNameInput = document.getElementById('lastName')
+    const addressInput = document.getElementById('address')
+    const cityInput = document.getElementById('city')
+    const emailInput = document.getElementById('email')
+
+
+    firstNameInput.addEventListener('input', function (event) {
+        if (/^[A-Z]/.test(event.target.value)) {
+            document.getElementById('firstNameErrorMsg').innerText = ''
+            firstNameOk = true
+        }
+        else {
+            document.getElementById('firstNameErrorMsg').innerText = 'Votre prénom doit commencer par majuscule'
+            firstNameOk = false
+        }
+    })
+
+    lastNameInput.addEventListener('input', function (event) {
+        if (/[A-Z]/.test(event.target.value)) {
+            document.getElementById('lastNameErrorMsg').innerText = ''
+            lastNameOk = true
+        }
+        else {
+            document.getElementById('lastNameErrorMsg').innerText = 'Votre nom doit contenir au moins une majuscule'
+            lastNameOk = false
+        }
+    })
+
+    addressInput.addEventListener('input', function (event) {
+        if (event.target.value != '') {
+            document.getElementById('addressErrorMsg').innerText = ''
+            addressOk = true
+        }
+        else {
+            document.getElementById('addressErrorMsg').innerText = 'Votre adresse doit être renseignée'
+            addressOk = false
+        }
+    })
+
+    cityInput.addEventListener('input', function (event) {
+        if (event.target.value != '') {
+            document.getElementById('cityErrorMsg').innerText = ''
+            cityOk = true
+        }
+        else {
+            document.getElementById('cityErrorMsg').innerText = 'Votre ville doit être renseignée'
+            cityOk = false
+        }
+    })
+
+    emailInput.addEventListener('input', function (event) {
+        if (/@/.test(event.target.value)) {
+            document.getElementById('emailErrorMsg').innerText = ''
+            emailOk = true
+        }
+        else {
+            document.getElementById('emailErrorMsg').innerText = 'Votre email n\'est pas valide'
+            emailOk = false
+        }
+    })
+
+    document.getElementById('order').addEventListener('click', function (event) {
+        event.preventDefault()
+        if (firstNameOk && lastNameOk && addressOk && cityOk && emailOk) {
+            const contact = new Contact(firstNameInput.value, lastNameInput.value, addressInput.value, cityInput.value, emailInput.value)
+            const cartList = getCart()
+
+            console.log(cartList)
+        }
+    })
+
 }
 
 const main = async () => {
 
-    await createCart();
+    await createCart()
+
+    submitForm()
 
     // for (let i in cartList) {
     //     quantityInputs[i].addEventListener('change', function (e) {
