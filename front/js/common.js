@@ -10,7 +10,7 @@ class Article {
     }
 }
 
-class Cart {
+class CartItem {
     constructor(id, quantity, color) {
         this.id = id;
         this.quantity = quantity;
@@ -20,7 +20,11 @@ class Cart {
 
 const retrieveProducts = async (articleId) => {
     try {
-        let data = await fetch(`http://localhost:3000/api/products/${articleId}`)
+        let url = articleId
+            ? `http://localhost:3000/api/products/${articleId}`
+            : `http://localhost:3000/api/products/`
+        let data = await fetch(url)
+
         if (data.ok) {
             return data.json()
         }

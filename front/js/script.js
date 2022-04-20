@@ -31,7 +31,7 @@ const createIndex = (itemsArray) => {
 }
 
 const main = async () => {
-    const productsList = await retrieveProducts('');
+    const productsList = await retrieveProducts();
     createIndex(productsList);
 }
 

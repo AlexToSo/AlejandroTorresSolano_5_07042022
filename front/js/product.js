@@ -21,7 +21,7 @@ const createProduct = (item) => {
 
 const addToCart = (articleId, articleNumber, articleColor) => {
     let cartList = getCart();
-    let articleToAdd = new Cart(articleId, articleNumber, articleColor);
+    let articleToAdd = new CartItem(articleId, articleNumber, articleColor);
 
     let alreadyInCart = false;
 
@@ -49,7 +49,7 @@ const main = async () => {
     createProduct(product);
 
     document.getElementById('addToCart').addEventListener('click', function () {
-        let articleNumber = parseFloat(document.getElementById('quantity').value);
+        let articleNumber = Number(document.getElementById('quantity').value);
         let articleColor = document.getElementById('colors').value;
 
         if ((articleNumber > 0) && (articleColor != '')) {
