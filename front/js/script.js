@@ -1,6 +1,14 @@
-/////////////////////////////////////////////////
-// Fonction pour construire la page index.html //
-/////////////////////////////////////////////////
+/**
+ * Constructs index.html page
+ * @param { Object[] } itemsArray
+ * @param { String } itemsArray[].altTxt
+ * @param { String[] } itemsArray[].colors
+ * @param { String } itemsArray[].description
+ * @param { String } itemsArray[].imageUrl
+ * @param { String } itemsArray[].name
+ * @param { Integer{0..} } itemsArray[].price
+ * @param { String } itemsArray[]._id
+ */
 const createIndex = (itemsArray) => {
 
     // Déclaration des éléments indépendentes des produits
@@ -39,13 +47,14 @@ const createIndex = (itemsArray) => {
     }
 }
 
-///////////////////
-// Fonction main //
-///////////////////
+/**
+ * Main function of index.html
+ */
 const main = async () => {
 
     // Obtention de la liste de produits à partir de l'API
     const productsList = await retrieveProducts()
+    console.log(productsList)
 
     // Construction de la page index.html avec la liste de produits
     createIndex(productsList)

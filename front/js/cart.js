@@ -1,6 +1,10 @@
-////////////////////////////////////////////////
-// Fonction pour construire la page cart.html //
-////////////////////////////////////////////////
+/**
+ * Constructs cart.html page
+ * @param { Object[] } cartList
+ * @param { String } cartList[].color
+ * @param { String } cartList[].id
+ * @param { Integer{1..} } cartList[].quantity
+ */
 const createCart = async (cartList) => {
 
     // Déclaration des variables pour compter le nombre d'articles et leur prix
@@ -116,9 +120,12 @@ const createCart = async (cartList) => {
 
 }
 
-//////////////////////////////////////////////////////////////
-// Fonction pour modifier le pannier dans la page cart.html //
-//////////////////////////////////////////////////////////////
+/**
+ * Modifies the cart in cart.html page
+ * @param { String } articleId
+ * @param { Integer{1..100} } articleNumber
+ * @param { String } articleColor
+ */
 const modifyCart = async (articleId, articleNumber, articleColor) => {
 
     // Récuperation de la liste actuelle du pannier
@@ -152,9 +159,10 @@ const modifyCart = async (articleId, articleNumber, articleColor) => {
     await createCart(cartList)
 }
 
-/////////////////////////////////////////////////////
-// Fonction pour vérifier les champs du formulaire //
-/////////////////////////////////////////////////////
+/**
+ * Checks the form before send it
+ * @return { Boolean } True if the form is correct; false if not
+ */
 const checkForm = () => {
 
     // Vérification de tous les champs du formulaire avec des expressions rationnelles
@@ -187,9 +195,16 @@ const checkForm = () => {
         document.getElementById('emailErrorMsg').innerText == ''
 }
 
-///////////////////////////////////////////////
-// Fonction pour envoi du formulaire à l'API //
-///////////////////////////////////////////////
+/**
+ * Sends the form to the API
+ * @param { Object } contact
+ * @param { String } contact.firstName
+ * @param { String } contact.lastName
+ * @param { String } contact.address
+ * @param { String } contact.city
+ * @param { String } contact.email
+ * @return { Object.<contact: Object, orderId: String, products: Object[]> }
+ */
 const sendForm = async (contact) => {
 
     // Récuperation et modification de la liste du pannier pour pouvoir être traitée par l'API
@@ -217,9 +232,9 @@ const sendForm = async (contact) => {
     }
 }
 
-///////////////////
-// Fonction main //
-///////////////////
+/**
+ * Main function of cart.html
+ */
 const main = async () => {
 
     // Récuperation de la liste du pannier pour afficher dans la page
@@ -246,6 +261,7 @@ const main = async () => {
 
             // Envoi du formulaire à l'API
             const order = await sendForm(contact)
+            console.log(order)
 
             // Si l'API retourne un orderId non null, rédirection vers la page de confirmation
             if (order.orderId) {

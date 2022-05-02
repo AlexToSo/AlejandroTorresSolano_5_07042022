@@ -1,6 +1,14 @@
-///////////////////////////////////////////////////
-// Fonction pour construire la page product.html //
-///////////////////////////////////////////////////
+/**
+ * Constructs product.html page
+ * @param { Object } item
+ * @param { String } item.altTxt
+ * @param { String[] } item.colors
+ * @param { String } item.description
+ * @param { String } item.imageUrl
+ * @param { String } item.name
+ * @param { Integer{0..} } item.price
+ * @param { String } item._id
+ */
 const createProduct = (item) => {
 
     // Déclaration des éléments indépendentes des couleurs
@@ -33,9 +41,12 @@ const createProduct = (item) => {
     }
 }
 
-//////////////////////////////////////////////////////
-// Fonction pour ajouter un produit dans le pannier //
-//////////////////////////////////////////////////////
+/**
+ * Adds a product to the cart
+ * @param { String } articleId
+ * @param { Integer{1..100} } articleNumber
+ * @param { String } articleColor
+ */
 const addToCart = (articleId, articleNumber, articleColor) => {
 
     // Récuperation de la liste de produits qui pourraient déjà être présents dans le pannier
@@ -67,9 +78,9 @@ const addToCart = (articleId, articleNumber, articleColor) => {
     saveCart(cartList)
 }
 
-///////////////////
-// Fonction main //
-///////////////////
+/**
+ * Main function of product.html
+ */
 const main = async () => {
 
     // Récuperation de l'id du produit dans l'URL
