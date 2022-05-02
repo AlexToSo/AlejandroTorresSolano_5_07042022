@@ -54,7 +54,6 @@ const main = async () => {
 
     // Obtention de la liste de produits à partir de l'API
     const productsList = await retrieveProducts()
-    console.log(productsList)
 
     // Construction de la page index.html avec la liste de produits
     createIndex(productsList)

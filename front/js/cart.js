@@ -261,7 +261,6 @@ const main = async () => {
 
             // Envoi du formulaire à l'API
             const order = await sendForm(contact)
-            console.log(order)
 
             // Si l'API retourne un orderId non null, rédirection vers la page de confirmation
             if (order.orderId) {
